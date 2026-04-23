@@ -1,10 +1,10 @@
 // CURSOR
 const cursor = document.getElementById('cursor');
 const trail = document.getElementById('trail');
-const isTouchDevice = window.matchMedia('(hover: none)').matches;
+const isMobile = window.matchMedia('(max-width: 768px)').matches;
 let mx = 0, my = 0;
 
-if (!isTouchDevice) {
+if (!isMobile) {
   document.addEventListener('mousemove', e => {
     mx = e.clientX; my = e.clientY;
     cursor.style.left = mx + 'px';
@@ -50,7 +50,7 @@ if (fp) staggerIO.observe(fp);
 if (fpu) staggerIO.observe(fpu);
 
 // MAGNETIC LINKS
-if (!isTouchDevice) {
+if (!isMobile) {
   document.querySelectorAll('.magnetic').forEach(el => {
     el.addEventListener('mousemove', e => {
       const r = el.getBoundingClientRect();
@@ -65,7 +65,7 @@ if (!isTouchDevice) {
 // NAME GLITCH
 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%?&';
 const hint = document.getElementById('nameHint');
-hint.textContent = isTouchDevice ? 'tap my name ↑' : 'hover my name ↑';
+hint.textContent = isMobile ? 'tap my name ↑' : 'hover my name ↑';
 
 function scrambleTo(el, target, onDone) {
   let iter = 0;
