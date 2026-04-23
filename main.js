@@ -65,6 +65,7 @@ if (!isTouchDevice) {
 // NAME GLITCH
 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%?&';
 const hint = document.getElementById('nameHint');
+hint.textContent = isTouchDevice ? 'tap my name ↑' : 'hover my name ↑';
 
 function scrambleTo(el, target, onDone) {
   let iter = 0;
@@ -88,7 +89,7 @@ const nameFirst = document.getElementById('nameFirst');
 let isQuangMinh = true;
 let scramblingFirst = false;
 
-nameFirst.addEventListener('mouseenter', () => {
+function triggerFirst() {
   if (scramblingFirst) return;
   scramblingFirst = true;
   hint.classList.add('gone');
@@ -97,14 +98,18 @@ nameFirst.addEventListener('mouseenter', () => {
     isQuangMinh = !isQuangMinh;
     scramblingFirst = false;
   });
-});
+}
+nameFirst.addEventListener('mouseenter', triggerFirst);
+nameFirst.addEventListener('touchstart', e => { e.preventDefault(); triggerFirst(); }, { passive: false });
 
 // Last name: always stays "Vu" but glitches on hover
 const nameLast = document.getElementById('nameLast');
 let scramblingLast = false;
 
-nameLast.addEventListener('mouseenter', () => {
+function triggerLast() {
   if (scramblingLast) return;
   scramblingLast = true;
   scrambleTo(nameLast, 'Vu', () => { scramblingLast = false; });
-});
+}
+nameLast.addEventListener('mouseenter', triggerLast);
+nameLast.addEventListener('touchstart', e => { e.preventDefault(); triggerLast(); }, { passive: false });
