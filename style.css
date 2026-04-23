@@ -29,7 +29,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 2rem; d
 .hero-label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 1.5rem; opacity: 0; animation: fade-up 0.8s 0.3s cubic-bezier(0.16,1,0.3,1) forwards; }
 
 .hero-title { font-size: clamp(3rem, 10vw, 7rem); font-weight: 300; line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 1.5rem; }
-.name-block { display: block; overflow: hidden; }
+.name-block { display: block; overflow: hidden; padding-bottom: 0.15em; margin-bottom: -0.15em; }
 .name-first { opacity: 0; transform: translateY(110%); animation: word-in 1s 0.5s cubic-bezier(0.16,1,0.3,1) forwards; display: inline-block; cursor: default; }
 .name-last { opacity: 0; transform: translateY(110%); animation: word-in 1s 0.75s cubic-bezier(0.16,1,0.3,1) forwards; display: inline-block; cursor: default; }
 
