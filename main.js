@@ -1,22 +1,25 @@
 // CURSOR
 const cursor = document.getElementById('cursor');
 const trail = document.getElementById('trail');
+const isTouchDevice = window.matchMedia('(hover: none)').matches;
 let mx = 0, my = 0;
 
-document.addEventListener('mousemove', e => {
-  mx = e.clientX; my = e.clientY;
-  cursor.style.left = mx + 'px';
-  cursor.style.top = my + 'px';
-  setTimeout(() => {
-    trail.style.left = mx + 'px';
-    trail.style.top = my + 'px';
-  }, 80);
-});
+if (!isTouchDevice) {
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+    setTimeout(() => {
+      trail.style.left = mx + 'px';
+      trail.style.top = my + 'px';
+    }, 80);
+  });
 
-document.querySelectorAll('a, button').forEach(el => {
-  el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-  el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-});
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+}
 
 // SCROLL PROGRESS
 window.addEventListener('scroll', () => {
@@ -47,15 +50,17 @@ if (fp) staggerIO.observe(fp);
 if (fpu) staggerIO.observe(fpu);
 
 // MAGNETIC LINKS
-document.querySelectorAll('.magnetic').forEach(el => {
-  el.addEventListener('mousemove', e => {
-    const r = el.getBoundingClientRect();
-    const dx = (e.clientX - (r.left + r.width / 2)) * 0.15;
-    const dy = (e.clientY - (r.top + r.height / 2)) * 0.25;
-    el.style.transform = `translate(${dx}px, ${dy}px)`;
+if (!isTouchDevice) {
+  document.querySelectorAll('.magnetic').forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const r = el.getBoundingClientRect();
+      const dx = (e.clientX - (r.left + r.width / 2)) * 0.15;
+      const dy = (e.clientY - (r.top + r.height / 2)) * 0.25;
+      el.style.transform = `translate(${dx}px, ${dy}px)`;
+    });
+    el.addEventListener('mouseleave', () => { el.style.transform = ''; });
   });
-  el.addEventListener('mouseleave', () => { el.style.transform = ''; });
-});
+}
 
 // NAME GLITCH
 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%?&';
