@@ -69,10 +69,12 @@ section { padding: 6rem var(--px); border-top: 1px solid var(--line); }
 .project-item:hover::before { transform: scaleX(1); }
 .project-item:hover { color: var(--bg); }
 .project-item:hover .project-meta, .project-item:hover .project-desc, .project-item:hover .project-num { color: rgba(245,245,240,0.5); }
+.project-item:hover .project-desc strong { color: rgba(245,245,240,0.9); }
 .project-num { font-size: 0.7rem; color: var(--muted); padding-top: 0.2rem; transition: color 0.3s; }
 .project-title { font-size: 1.15rem; font-weight: 300; letter-spacing: -0.01em; margin-bottom: 0.5rem; transition: letter-spacing 0.4s cubic-bezier(0.16,1,0.3,1); }
 .project-item:hover .project-title { letter-spacing: 0.04em; }
 .project-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.7; transition: color 0.3s; }
+.project-desc strong { font-weight: 400; color: var(--text); }
 .project-tag { display: inline-block; font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid var(--line); padding: 2px 7px; margin-top: 0.65rem; margin-right: 4px; transition: border-color 0.3s, color 0.3s; }
 .project-item:hover .project-tag { border-color: rgba(245,245,240,0.3); color: rgba(245,245,240,0.6); }
 .project-meta { font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-align: right; padding-top: 0.2rem; transition: color 0.3s; white-space: nowrap; }
