@@ -4,7 +4,7 @@ const trail = document.getElementById('trail');
 const isMobile = window.matchMedia('(max-width: 768px)').matches;
 let mx = 0, my = 0;
 
-if (!isMobile && cursor && trail) {
+if (!isMobile) {
   document.addEventListener('mousemove', e => {
     mx = e.clientX; my = e.clientY;
     cursor.style.left = mx + 'px';
@@ -22,13 +22,10 @@ if (!isMobile && cursor && trail) {
 }
 
 // SCROLL PROGRESS
-const progressEl = document.getElementById('progress');
-if (progressEl) {
-  window.addEventListener('scroll', () => {
-    const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
-    progressEl.style.width = pct + '%';
-  });
-}
+window.addEventListener('scroll', () => {
+  const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+});
 
 // SCROLL REVEAL
 const io = new IntersectionObserver(entries => {
@@ -68,13 +65,13 @@ if (!isMobile) {
 // NAME GLITCH
 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%?&';
 const hint = document.getElementById('nameHint');
-if (hint) hint.textContent = isMobile ? 'tap my name ↑' : 'hover my name ↑';
+hint.textContent = isMobile ? 'tap my name ↑' : 'hover my name ↑';
 
 function scrambleTo(el, target, onDone) {
   let iter = 0;
   const interval = setInterval(() => {
     el.textContent = target.split('').map((c, i) => {
-      if (c === ' ') return ' ';
+      if (c === '\u00a0') return '\u00a0';
       if (i < iter) return target[i];
       return chars[Math.floor(Math.random() * chars.length)];
     }).join('');
@@ -87,34 +84,32 @@ function scrambleTo(el, target, onDone) {
   }, 35);
 }
 
+// First name: Jeremy <-> Quang Minh
 const nameFirst = document.getElementById('nameFirst');
-if (nameFirst) {
-  let isQuangMinh = true;
-  let scramblingFirst = false;
+let isQuangMinh = true;
+let scramblingFirst = false;
 
-  function triggerFirst() {
-    if (scramblingFirst) return;
-    scramblingFirst = true;
-    if (hint) hint.classList.add('gone');
-    const next = isQuangMinh ? 'Jeremy' : 'Quang Minh';
-    scrambleTo(nameFirst, next, () => {
-      isQuangMinh = !isQuangMinh;
-      scramblingFirst = false;
-    });
-  }
-  nameFirst.addEventListener('mouseenter', triggerFirst);
-  nameFirst.addEventListener('touchstart', e => { e.preventDefault(); triggerFirst(); }, { passive: false });
+function triggerFirst() {
+  if (scramblingFirst) return;
+  scramblingFirst = true;
+  hint.classList.add('gone');
+  const next = isQuangMinh ? 'Jeremy' : 'Quang\u00a0Minh';
+  scrambleTo(nameFirst, next, () => {
+    isQuangMinh = !isQuangMinh;
+    scramblingFirst = false;
+  });
 }
+nameFirst.addEventListener('mouseenter', triggerFirst);
+nameFirst.addEventListener('touchstart', e => { e.preventDefault(); triggerFirst(); }, { passive: false });
 
+// Last name: always stays "Vu" but glitches on hover
 const nameLast = document.getElementById('nameLast');
-if (nameLast) {
-  let scramblingLast = false;
+let scramblingLast = false;
 
-  function triggerLast() {
-    if (scramblingLast) return;
-    scramblingLast = true;
-    scrambleTo(nameLast, 'Vu', () => { scramblingLast = false; });
-  }
-  nameLast.addEventListener('mouseenter', triggerLast);
-  nameLast.addEventListener('touchstart', e => { e.preventDefault(); triggerLast(); }, { passive: false });
+function triggerLast() {
+  if (scramblingLast) return;
+  scramblingLast = true;
+  scrambleTo(nameLast, 'Vu', () => { scramblingLast = false; });
 }
+nameLast.addEventListener('mouseenter', triggerLast);
+nameLast.addEventListener('touchstart', e => { e.preventDefault(); triggerLast(); }, { passive: false });
